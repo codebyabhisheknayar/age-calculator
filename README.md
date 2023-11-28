@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
 
-Demo : <a href="https://codebyabhisheknayar.github.io/age-calculator/" target="_blank">Link</>
+Demo : https://codebyabhisheknayar.github.io/age-calculator/
 
 ## Development server
 
