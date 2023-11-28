@@ -22,11 +22,16 @@ export class AppComponent implements OnInit {
       sday: [null, [Validators.min(1), Validators.max(31)]],
     });
 
-    // Update the maximum day value based on the selected month
     this.ageForm.get('month')?.valueChanges.subscribe((monthValue) => {
       const maxDays = this.getMaxDaysInMonth(monthValue);
       this.ageForm.get('day')?.setValidators([Validators.required, Validators.min(1), Validators.max(maxDays)]);
       this.ageForm.get('day')?.updateValueAndValidity();
+    });
+
+    this.ageForm.get('smonth')?.valueChanges.subscribe((monthValue) => {
+      const maxDays = this.getMaxDaysInMonth(monthValue);
+      this.ageForm.get('sday')?.setValidators([Validators.required, Validators.min(1), Validators.max(maxDays)]);
+      this.ageForm.get('sday')?.updateValueAndValidity();
     });
 
 
@@ -43,7 +48,6 @@ export class AppComponent implements OnInit {
     if (month === 4 || month === 6 || month === 9 || month === 11) {
       return 30;
     } else if (month === 2) {
-      // Handle February separately (leap year check)
       const year = this.ageForm.get('year')?.value || 0;
       return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0) ? 29 : 28;
     } else {
@@ -99,13 +103,8 @@ export class AppComponent implements OnInit {
 
     if (this.isChecked === true) {
       ageInMilliseconds = chooseDate.getTime() - selectedDate.getTime();
-      console.log('choose-date', ageInMilliseconds);
-      console.log('working 1', chooseDate);
-      // this.clearForm();
     } else {
       ageInMilliseconds = currentDate.getTime() - selectedDate.getTime();
-      console.log('working 2')
-      // this.clearForm();
     }
     const ageDate = new Date(ageInMilliseconds);
 
@@ -116,11 +115,10 @@ export class AppComponent implements OnInit {
     };
     console.log('month', this.age.months);
   }
+
   clearForm(): void {
     this.ageForm.reset(); // This will clear all form controls
   }
 }
-function isFormValid() {
-  throw new Error('Function not implemented.');
-}
+
 

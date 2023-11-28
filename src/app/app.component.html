@@ -21,7 +21,18 @@
               placeholder="DD" />
             <div class="text-red-700 text-xs"
               *ngIf="ageForm.get('day')?.invalid && (ageForm.get('day')?.dirty || ageForm.get('day')?.touched)">
-              {{ ageForm.get('day')?.getError('required') ? 'Day is required.' : '' }} {{ ageForm.get('day')?.getError('min') || ageForm.get('day')?.getError('max') ? 'Day must be between 1 and 31.' : ''}}
+              <div>
+              {{ ageForm.get('day')?.getError('required') ? 'Day is required.' : '' }}
+              </div>
+              <div>
+              {{ ageForm.get('day')?.invalid && [4, 6, 9, 11].includes(ageForm.get('month')?.value) ? 'Selected month has 30 days.' :   '' }}
+              </div>
+              <div>
+              {{ ageForm.get('day')?.invalid && ageForm.get('month')?.value === 2 ? 'Selected month has ' + this.getMaxDaysInMonth(2) + ' days.' : ''}}
+              </div>
+              <div>
+               {{ ageForm.get('day')?.invalid && ageForm.get('month')?.value !== 2 && ageForm.get('day')?.value && !(ageForm.get('day')?.getError('min') || ageForm.get('day')?.getError('max')) ? 'Day must be between 1 and 31.' : '' }}
+              </div>
             </div>
           </div>
           <div>
@@ -67,10 +78,22 @@
                 type="number" id="sday" formControlName="sday" placeholder="DD" />
               <div class="text-red-700 text-xs"
                 *ngIf="ageForm.get('sday')?.invalid && (ageForm.get('sday')?.dirty || ageForm.get('sday')?.touched)">
+                <div>
                 {{ ageForm.get('sday')?.getError('required') ? 'Day is required.' : '' }}
-                {{ ageForm.get('sday')?.getError('min') || ageForm.get('sday')?.getError('max') ? 'Day must be between 1and 31.' : ''
-                }}
+                </div>
+                <div>
+            {{ ageForm.get('sday')?.invalid && [4, 6, 9, 11].includes(ageForm.get('smonth')?.value) ? 'Selected month has 30 days.' :
+            '' }}
+            </div>
+            <div>
+            {{ ageForm.get('sday')?.invalid && ageForm.get('smonth')?.value === 2 ? 'Selected month has ' + this.getMaxDaysInMonth(2)
+            + ' days.' : ''}}
+            </div>
+            <div>
+            {{ ageForm.get('sday')?.invalid && ageForm.get('smonth')?.value !== 2 && ageForm.get('day')?.value &&
+            !(ageForm.get('sday')?.getError('min') || ageForm.get('sday')?.getError('smax')) ? 'Day must be between 1 and 31.' : '' }}
               </div>
+            </div>
             </div>
             <div>
               <label class="block uppercase tracking-wide text-gray text-xs font-semibold mb-2"
@@ -103,11 +126,11 @@
         </ng-container>
         <div class=" mt-2 relative h-32">
           <div class="h-px bg-gray-200 border-0 dark:bg-gray-700 absolute top-[40%] w-full "></div>
-          <div class="flex sm:justify-end justify-center relative z-10 cursor-pointer " (click)="calculateAge()">
+          <div class="flex sm:justify-end justify-center relative z-10 cursor-pointer " (click)="calculateAge()" [ngClass]="!ageForm.valid ? 'cursor-not-allowed pointer-events-none': ''">
             <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M1.46449 59.4727C-5.01549 34.5937 10.6356 8.3517 36.0266 1.5237C52.5095 -2.9093 70.6646 2.50671 82.7976 15.4767C89.2335 22.3567 92.0575 27.4617 94.3715 36.4027C100.835 61.3682 85.4536 87.2001 60.1047 94.2151C56.2121 95.2341 52.1266 95.7766 47.9145 95.7766C43.5741 95.7766 39.3679 95.2005 35.3689 94.1205C27.0626 91.7799 19.3257 87.1391 13.1335 80.4917C6.73549 73.6247 3.74947 68.2447 1.46449 59.4727ZM46.9145 57.8897V41.9167C46.9145 31.9337 47.2895 25.9427 47.9145 25.9427C48.5385 25.9427 48.9265 32.0467 48.9465 42.1927L48.9775 58.4427L51.0835 55.6187C52.2415 54.0647 54.9335 51.6927 57.0655 50.3477C61.2055 47.7337 69.9145 45.9347 69.9145 47.6937C69.9145 48.2557 67.9225 49.0147 65.4875 49.3797C57.1455 50.6307 50.6025 57.1737 49.3515 65.5157C48.9865 67.9507 48.3395 69.9427 47.9145 69.9427C47.4895 69.9427 46.8425 67.9507 46.4775 65.5157C45.2265 57.1737 38.6835 50.6307 30.3415 49.3797C25.8305 48.7027 24.1745 46.9427 28.0485 46.9427C32.8385 46.9427 38.5955 49.5827 42.6645 53.6467L46.9145 57.8897Z"
-                fill="#151515" class="hover:fill-primary transition ease-in-out duration-[300ms]" />
+                fill="#151515" [ngClass]="!ageForm.valid ? 'fill-gray-500': ''" class="hover:fill-primary transition ease-in-out duration-[300ms]" />
             </svg>
 
           </div>
