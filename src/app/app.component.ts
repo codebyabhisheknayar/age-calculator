@@ -113,7 +113,6 @@ export class AppComponent implements OnInit {
       months: ageDate.getUTCMonth(),
       days: ageDate.getUTCDate() - 1
     };
-    console.log('month', this.age.months);
   }
 
   clearForm(): void {
